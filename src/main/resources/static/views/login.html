@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Spring Security Example</title>
+<script type="text/javascript" src="/resource/js/jquery.min.js"></script>
+</head>
+<body>
+	<form id="login-form">
+		<div>
+			<label> User Name : <input type="text" name="username"
+				id="username" />
+			</label>
+		</div>
+		<div>
+			<label> Password: <input type="password" name="password"
+				id="password" />
+			</label>
+		</div>
+		<div>
+			<input type="button" id="sign" value="Sign In" />
+		</div>
+	</form>
+</body>
+<script type="text/javascript">
+	window.onload = function() {
+		$("#sign").on("click", function() {
+			$.ajax({
+		        type: 'POST',
+		        url: '/login',
+		        data: $('#login-form').serialize(),
+		        cache: false,
+		        dataType: "json",
+		        crossDomain: false,
+		        success: function (data) {
+		            if (data.isSuccess) {
+		                console.info(data.message);
+		                window.location.href="/manage/home.html";
+		            }
+		            else {
+		                console.error("Unable to login");
+		            }
+		        },
+		        error: function (data) {
+		            console.error("Login failure" + JSON.stringify(data));
+		        }
+		    });
+		});
+	};
+</script>
+</html>

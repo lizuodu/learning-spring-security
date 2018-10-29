@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>home</title>
+<script type="text/javascript" src="/resource/js/jquery.min.js"></script>
+</head>
+<body>
+	<a href="/manage/module1.html" code="module1" style="display:none">module1</a>
+	<a href="/manage/module2.html" code="module2" style="display:none">module2</a>
+	<a href="#" id="add" code="home:add" style="display:none">add</a>
+	<a href="#" id="delete" code="home:delete" style="display:none">delete</a>
+	<a href="/logout">logout</a>
+</body>
+<script type="text/javascript">
+	window.onload = function() {
+		$.get("/permission/get", function (res) {
+			var menu = res.menu;
+			var button = res.button;
+			if (menu) {
+				for (var i = 0; i < menu.length; i++) {
+					var el = menu[i];
+					$("a[code='"+el.code+"']").css({'display': 'inline'});
+				}
+			}
+			if (button) {
+				for (var i = 0; i < button.length; i++) {
+					var el = button[i];
+					$("a[code='"+el.code+"']").css({'display': 'inline'});
+				}
+			}
+		});
+		
+	};
+</script>
+</html>
