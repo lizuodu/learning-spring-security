@@ -9,12 +9,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.example.demo.mapper.PermissionMapper;
 import com.example.demo.model.Permission;
@@ -57,6 +53,10 @@ public class PermissionServiceImpl implements PermissionService {
 		
 		SecurityContextImpl securityContextImpl = (SecurityContextImpl) request
 				.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
+		
+		if (securityContextImpl == null) {
+			return null;
+		}
 		
 		@SuppressWarnings("unchecked")
 		Collection<Permission> authorities = (Collection<Permission>) securityContextImpl.getAuthentication().getAuthorities();

@@ -3,9 +3,7 @@ package com.example.demo.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -13,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.example.demo.cache.RedisCache;
 import com.example.demo.constants.ConstantCache;
 import com.example.demo.mapper.AccountMapper;
@@ -73,15 +70,15 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Override
 	public List<Account> findByAccountModel(Account account) {
-		List<Account> accountList = null;
+		List<Account> accountList = new ArrayList<>();
 		String key = ConstantCache.AUTH_KEY_PREFIX + account.getUsername();
-		String accountStr = this.redisCache.get(key);
+		accountList = this.redisCache.getList(key, Account.class);
 		try {
-			if (StringUtils.isEmpty(accountStr)) {
+			if (accountList == null || accountList.isEmpty()) {
 				accountList = this.accountMapper.findByModel(account);
-				redisCache.put(key, JSON.toJSONString(accountList), 1200, TimeUnit.SECONDS);
+				this.redisCache.putList(key, accountList, 1200L, TimeUnit.SECONDS);
 			} else {
-				accountList = JSON.parseArray(accountStr, Account.class);
+				accountList = this.redisCache.getList(key, Account.class);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
