@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import java.util.List;
-
 import org.springframework.security.core.GrantedAuthority;
 
 /**

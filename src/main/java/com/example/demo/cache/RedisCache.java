@@ -60,7 +60,7 @@ public class RedisCache {
 		List<T> t = JSONArray.parseArray(json, clazz);
 		return t;
 	}
-
+	
 	public void delete(String key) {
 		redisTemplate.delete(key);
 	}

@@ -14,10 +14,11 @@ public class PermissionController {
 	
 	@Resource
 	private PermissionService permissionService;
-		
+			
 	@RequestMapping(value = "/get", method = {RequestMethod.GET})
 	public Object get() {
 		return this.permissionService.getPermissionGroupByResType();
 	}
+	
 
 }
