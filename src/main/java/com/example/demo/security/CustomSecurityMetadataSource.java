@@ -3,6 +3,7 @@ package com.example.demo.security;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -41,6 +42,7 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		
+		// 未登录
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth.getPrincipal().equals("anonymousUser")) {
 			HttpServletResponse response = ServletUtil.getResponse();
@@ -52,19 +54,19 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 			}
 		}
 		
+		// 请求url
 		FilterInvocation fi = (FilterInvocation) object;
 		String requestURL = fi.getRequestUrl();
 		if (requestURL.contains("?")) {
-			requestURL = requestURL.substring(0, requestURL.indexOf("?"));  //不支持GET参数，跳转页面GET参数js自己可以处理
+			requestURL = requestURL.substring(0, requestURL.indexOf("?"));  //忽略URL参数
 		}
 		String requestMethod = fi.getRequest().getMethod();
 		
-		AntPathMatcher antPathMatcher = new AntPathMatcher();
-        
+		AntPathMatcher antPathMatcher = new AntPathMatcher();        
 		Collection<ConfigAttribute> configAttributes = new ArrayList<>();
 		
+		// 获取请求对应权限
 		Permission permissions = this.permissionService.getPermissionByUrlAndMethod(requestURL, requestMethod);
-		
 		if (permissions != null) {
 			if (antPathMatcher.match(permissions.getUrl(), requestURL) && requestMethod.equals(permissions.getMethod())) {
 				ConfigAttribute configAttribute = new SecurityConfig(permissions.getCode());
@@ -72,8 +74,9 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 			}
 		}
 		
+		// 没有匹配的权限
 		if (configAttributes.isEmpty()) {
-			configAttributes.add(new SecurityConfig(UUID.randomUUID().toString()));
+			configAttributes.add(null);
 		}
 		return configAttributes;
 	}

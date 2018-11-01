@@ -3,7 +3,6 @@ package com.example.demo.security;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -25,7 +24,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
 					
-		// 用户权限
+		// 当前帐号权限
 		@SuppressWarnings("unchecked")
 		Collection<Permission> authorities = (Collection<Permission>) authentication.getAuthorities();
 		Iterator<Permission> ait = authorities.iterator();
@@ -35,6 +34,9 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
 		
 		while (cit.hasNext()) {
 			ConfigAttribute configAttribute = cit.next();
+			if (configAttributes == null) {
+				throw new AccessDeniedException("没有权限");
+			}
 			while (ait.hasNext()) {
 				Permission permission = ait.next();
 				if (configAttribute.getAttribute().equals(permission.getCode())) {

@@ -58,6 +58,7 @@ public class PermissionServiceImpl implements PermissionService {
 		SecurityContextImpl securityContextImpl = (SecurityContextImpl) request
 				.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
 		
+		@SuppressWarnings("unchecked")
 		Collection<Permission> authorities = (Collection<Permission>) securityContextImpl.getAuthentication().getAuthorities();
 		List<Permission> authList = new ArrayList<>(authorities);
 		
