@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/resource/**/*.*");
 		web.ignoring().antMatchers("/login.html");
 		web.ignoring().antMatchers("/public/**/*.*");
-		web.ignoring().antMatchers("/permission/get");
+		web.ignoring().antMatchers("/account/permission");
 	}
 
 	/**

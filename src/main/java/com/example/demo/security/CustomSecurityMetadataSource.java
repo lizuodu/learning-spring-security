@@ -18,6 +18,7 @@ import org.springframework.util.AntPathMatcher;
 
 import com.example.demo.model.Permission;
 import com.example.demo.service.PermissionService;
+import com.example.demo.util.SecurityUtil;
 import com.example.demo.util.ServletUtil;
 
 /**
@@ -41,7 +42,8 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		
 		// 未登录
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = SecurityUtil.getSecurityContext().getAuthentication();
 		if (auth.getPrincipal().equals("anonymousUser")) {
 			HttpServletResponse response = ServletUtil.getResponse();
 			try {

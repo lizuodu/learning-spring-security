@@ -15,7 +15,7 @@
 </body>
 <script type="text/javascript">
 	window.onload = function() {
-		$.get("/permission/get", function (res) {
+		$.get("/account/permission", function (res) {
 			var menu = res.menu;
 			var button = res.button;
 			if (menu) {

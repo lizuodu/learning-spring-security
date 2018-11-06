@@ -21,15 +21,6 @@
 		<result column="pid" property="pid" jdbcType="BIGINT" />
 	</resultMap>
 	
-	<select id="getPermissionByUsername" resultMap="permissionMap">
-		SELECT p.id, p.code, p.description, p.res_type, p.url, p.method, p.pid
-		FROM t_sys_permission p
-		LEFT JOIN t_sys_permission_role m ON p.id=m.permission_id
-		LEFT JOIN t_sys_user_role r ON m.role_id=r.role_id
-		LEFT JOIN t_sys_user u ON u.id=r.user_id
-		WHERE u.username=#{username}
-	</select>
-
 	<select id="getPermissionByRoleId" parameterType="java.lang.Long"
 		resultMap="permissionMap">
 		SELECT p.id, p.code, p.description, p.res_type, p.url, p.method, p.pid

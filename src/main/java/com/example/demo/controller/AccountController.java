@@ -41,5 +41,11 @@ public class AccountController {
 		return "delete";
 	}
 	
+	@RequestMapping(value = "/permission")
+	@ResponseBody
+	public Object get() {
+		return this.accountService.getPermissionGroupByResType();
+	}
+	
 
 }

@@ -1,7 +1,5 @@
 package com.example.demo.mapper;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,21 +13,6 @@ import com.example.demo.model.Permission;
  */
 @Mapper
 public interface PermissionMapper {
-
-	/**
-	 * 获取角色对应权限
-	 * 
-	 * @param roleId
-	 * @return
-	 */
-	public List<Permission> getPermissionByRoleId(@Param("id") Long roleId);
-	
-	/**
-	 * 获取帐号对应权限
-	 * @param accountName
-	 * @return
-	 */
-	public List<Permission> getPermissionByUsername(@Param("username") String accountName);
 	
 	/**
 	 * 获取资源权限
