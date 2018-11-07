@@ -14,13 +14,13 @@ import com.example.demo.model.Role;
  */
 @Mapper
 public interface RoleMapper {
-	
+
 	/**
 	 * 根据账号id找对应的角色
 	 * @param userId
 	 * @return
 	 */
 	public List<Role> findByAccountId(@Param("id") Long accountId);
-	
+
 
 }

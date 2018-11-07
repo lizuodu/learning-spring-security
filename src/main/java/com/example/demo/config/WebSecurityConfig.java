@@ -37,23 +37,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AccountService accountService;
-	
+
 	@Autowired
 	private AuthFailureHandler authFailureHandler;
-	
+
 	@Autowired
 	private AuthSuccessHandler authSuccessHandler;
-	
+
 	@Autowired
 	private CustomAccessDecisionManager customAccessDecisionManager;
-	
+
 	@Autowired
 	private CustomSecurityMetadataSource customSecurityMetadataSource;
-	
+
 	@Autowired
 	private AuthAccessDeniedHandler authAccessDeniedHandler;
-	
-	
+
+
 	/**
 	 * 不受权限控制url规则
 	 */
@@ -110,7 +110,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			})
 		    .and()
 		    .exceptionHandling().accessDeniedHandler(authAccessDeniedHandler);
-				
+
 	}
 
 	/**
@@ -131,21 +131,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 自定义
 		// https://spring.io/blog/2017/11/01/spring-security-5-0-0-rc1-released#password-storage-format
 		auth.userDetailsService(accountService).passwordEncoder(new PasswordEncoder() {
-			
+
 			@Override
 			public boolean matches(CharSequence rawPassword, String encodedPassword) {
 				return encodedPassword.equals(rawPassword);
 			}
-			
+
 			@Override
 			public String encode(CharSequence rawPassword) {
 				return rawPassword.toString();
 			}
 		});
-		
-		
+
+
 	}
-	
+
 	@Bean
 	public SessionRegistry getSessionRegistry() {
 		return new SessionRegistryImpl();

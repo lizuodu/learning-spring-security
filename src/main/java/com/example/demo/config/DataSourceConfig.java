@@ -19,7 +19,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @Configuration
 @MapperScan(basePackages = "com.example.demo.mapper", sqlSessionFactoryRef = "sqlSessionFactory")
 public class DataSourceConfig {
-	
+
 
 	@Bean(name = "dataSource")
 	@ConfigurationProperties(prefix="spring.datasource")

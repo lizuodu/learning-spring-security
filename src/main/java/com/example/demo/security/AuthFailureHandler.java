@@ -13,6 +13,11 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * 认证失败处理程序
+ * @author lizuodu
+ * @date   2018年11月7日
+ */
 @Component
 public class AuthFailureHandler implements AuthenticationFailureHandler {
 
@@ -25,9 +30,9 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
 		obj.put("isSuccess", false);
 		obj.put("message", "FAILURE");
 		PrintWriter out = response.getWriter();
-        out.write(obj.toJSONString());
-        out.flush();
-        out.close();
+		out.write(obj.toJSONString());
+		out.flush();
+		out.close();
 	}
 
 }

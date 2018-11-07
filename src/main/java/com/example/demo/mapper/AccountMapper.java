@@ -13,7 +13,7 @@ import com.example.demo.model.Account;
  */
 @Mapper
 public interface AccountMapper {
-	
+
 	/**
 	 * 获取一个账号
 	 * @param account
