@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -37,7 +38,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
 		Account account = new Account();
 		account.setUsername(user);
 		List<Permission> permissionList = new ArrayList<>();
-
+		SoftReference<List<Permission>> store = new SoftReference<>(permissionList);
 
 		// 资源权限
 		Iterator<ConfigAttribute> cit = configAttributes.iterator();
@@ -50,7 +51,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
 			if (SecurityConstants.API_ROLE.equals(configAttribute.getAttribute())) {
 				return;
 			}
-			if (permissionList.isEmpty()) {
+			if (store.get().isEmpty()) {
 				permissionList = this.accountService.getPermission(account);
 			}
 			for (Permission p: permissionList) {
